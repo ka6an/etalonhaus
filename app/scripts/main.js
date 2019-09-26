@@ -13,8 +13,9 @@ function ready() {
     var js_headerMenuMobileBtn = document.querySelector('.js_headerMenuMobileBtn');
     var gallerySlider = document.querySelector('.js_gallery-slider');
     var links = document.querySelectorAll('.js_link');
-
     var sendMessageForm = document.querySelector('.js_form');
+    var lazyImages = [].slice.call(document.querySelectorAll("img.lazy"));
+    var active = false;
 
 
     /*==========
@@ -24,10 +25,12 @@ function ready() {
     window.addEventListener('resize', function() {
         windowWidth = window.innerWidth || document.documentElement.clientWidth;
         onHeaderChange();
+        lazyLoad();
     });
 
     document.addEventListener('scroll', function() {
         onHeaderChange();
+        lazyLoad();
     });
 
     if (gallerySlider) {
@@ -50,6 +53,7 @@ function ready() {
 
     onHeaderChange();
     initGalery();
+    lazyLoad();
 
     /*==========
     functions
@@ -103,36 +107,57 @@ function ready() {
         e.preventDefault();
         var successMessage = document.querySelector('.js_from-success');
 
-        form[0].reset();
+        $.ajax({
+            type: form.attr('method'),
+            url: form.attr('action'),
+            data: form.serialize(),
+            success: function() {
+                form[0].reset();
                 form[0].classList.add('hidden');
                 successMessage.classList.remove('hidden');
                 setTimeout(function() {
                     form[0].classList.remove('hidden');
                     successMessage.classList.add('hidden');
                 }, 2000);
-
-        // $.ajax({
-        //     type: form.attr('method'),
-        //     url: form.attr('action'),
-        //     data: form.serialize(),
-        //     success: function() {
-        //         form[0].reset();
-        //         form[0].classList.add('hidden');
-        //         successMessage.classList.remove('hidden');
-        //         setTimeout(function() {
-        //             form[0].classList.remove('hidden');
-        //             successMessage.classList.add('hidden');
-        //         }, 2000);
-        //     },
-        //     error: function() {
-        //         console.log('error sendMessage');
-        //     }
-        // });
+            },
+            error: function() {
+                console.log('error sendMessage');
+            }
+        });
     }
 
     function toggleMobileMenu() {
         if (header) {
             header.classList.toggle('open');
+        }
+    }
+
+    function lazyLoad() {
+        if (active === false) {
+            active = true;
+
+            setTimeout(function() {
+                lazyImages.forEach(function(lazyImage) {
+                    if (lazyImage.getBoundingClientRect().top <= window.innerHeight + 100 &&
+                        lazyImage.getBoundingClientRect().bottom >= 0 &&
+                        getComputedStyle(lazyImage).display !== "none") {
+                        lazyImage.src = lazyImage.dataset.src;
+                        lazyImage.classList.remove("lazy");
+
+                        lazyImages = lazyImages.filter(function(image) {
+                            return image !== lazyImage;
+                        });
+
+                        if (lazyImages.length === 0) {
+                            document.removeEventListener("scroll", lazyLoad);
+                            window.removeEventListener("resize", lazyLoad);
+                            window.removeEventListener("orientationchange", lazyLoad);
+                        }
+                    }
+                });
+
+                active = false;
+            }, 200);
         }
     }
 }

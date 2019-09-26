@@ -231,6 +231,18 @@ a {
     top: -185px;
 }
 
+img{}
+img:before{
+    content:"";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--gray);
+}
+
 
 /*========== header ==========*/
 
@@ -347,7 +359,7 @@ header {
 }
 
 .main_btn {
-    margin-top: 65px;
+    margin-top: 45px;
 }
 
 .main-bg {
@@ -429,10 +441,17 @@ header {
 /*========== advantages block ==========*/
 
 .advantages {
-    background: url(../images/advantages-bg.jpg) no-repeat center center;
-    background-size: cover;
     color: var(--white);
     padding: 65px 0 80px;
+}
+.advantages__bg{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -1;
 }
 
 .advantages-list {
@@ -514,6 +533,7 @@ header {
     height: 100%;
     object-fit: cover;
     display: block;
+    color: var(--darkBlue);
 }
 
 .gallery__placeholder {
@@ -581,13 +601,27 @@ header {
 /*========== contacts ==========*/
 
 .contacts {
-    background: url(../images/notebook.png) no-repeat -108px center, url(../images/helmet.png) no-repeat calc(100% + 95px) center var(--gray);
+    background: var(--gray);
     padding: 70px 0;
+    position: relative;
+}
+
+.contacts__img{
+    position: absolute;
+    top: 0;
+}
+.contacts__img-left{
+    left: -108px;
+}
+.contacts__img-right{
+    right: -95px;
 }
 
 .contacts-content {
     max-width: 620px;
     margin: 0 auto;
+    position: relative;
+    z-index: 1;
 }
 
 .form-success {
@@ -671,6 +705,7 @@ header {
     width: 25px;
     height: 25px;
     border: 1px solid #ddd;
+    background: var(--white);
     transition: border-color .2s ease;
 }
 
@@ -956,8 +991,10 @@ footer {
     /*========== contacts ==========*/
 
     .contacts {
-        background: var(--gray);
         padding: 40px 0;
+    }
+    .contacts__img{
+        display: none;
     }
 
     .contacts-content {}
