@@ -194,7 +194,7 @@ a {
 }
 
 .btn {
-    display: inline-block;
+    display: block;
     -webkit-appearance: none;
     border: 0;
     border-radius: 5px;
@@ -312,14 +312,17 @@ header {
 
 .main {
     background: var(--gray);
-    padding: 0 0 50px 0;
     margin: 185px 0 0 0;
 }
 
 .main-content {
-    max-width: 470px;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+.main-content-wrap{
+    max-width: 500px;
     color: var(--black);
-    position: relative;
 }
 
 .main__header {
@@ -346,11 +349,7 @@ header {
     margin-top: 65px;
 }
 
-.main-bg {
-    position: absolute;
-    bottom: -50px;
-    left: calc(100% + 80px);
-}
+.main-bg {display: block;margin-top: -70px;}
 
 
 /*========== services block ==========*/
@@ -577,7 +576,7 @@ header {
 }
 
 .contacts-content {
-    width: 620px;
+    max-width: 620px;
     margin: 0 auto;
 }
 
@@ -620,9 +619,8 @@ header {
 }
 
 .form__input {
-    width: 300px;
+    width: calc(50% - 10px);
     height: 45px;
-
 }
 
 .form__input::placeholder {
@@ -637,9 +635,7 @@ header {
     padding-top: 17px;
 }
 
-.form-checkbox {
-    width: 300px;
-}
+.form-checkbox {margin: 0 20px 0 0;}
 
 .form-checkbox__input {
     position: absolute;
@@ -732,6 +728,9 @@ footer {
 }
 .btn{
     font-size: 16px;
+}
+.title{
+    margin: 0 0 30px 0;
 }
     /*========== header ==========*/
 
@@ -833,30 +832,51 @@ footer {
 
     /*========== main block ==========*/
 
-    .main {}
+    .main {
+    margin: 150px 0 0 0;
+    padding: 0 0 35px 0;
+}
 
-    .main-content {}
+    .main-content {
+    justify-content: center;
+    text-align: center;
+}
+    .main-content-wrap{}
+    .main-bg{display: none;}
 
     .main__header {}
 
     .main__tagline {}
 
-    .main_btn {}
+    .main_btn {margin: 30px auto 0;}
 
 
     /*========== servises block ==========*/
 
-    .servises {}
+    .servises {
+    padding: 40px 0;
+}
 
-    .services-list {}
+    .services-list {
+    margin: 0 auto;
+}
 
-    .services-item {}
+    .services-item {
+    width: 100%;
+    margin: 40px auto 0;
+    padding: 0!important;
+}
+
+.services-item:first-child{
+    margin: 0 auto;
+}
 
     .services-image {}
 
     .services__icon {}
 
-    .services-content {}
+    .services-content {
+}
 
     .services__title {}
 
@@ -865,22 +885,31 @@ footer {
 
     /*========== advantages block ==========*/
 
-    .advantages {}
+    .advantages {
+    padding: 40px 0;
+}
 
     .advantages-list {}
 
-    .advantages-item {}
+    .advantages-item {
+    width: 50%;
+    margin: 30px 0 0 0;
+}
 
     .advantages-image {}
 
     .advantages__icon {}
 
-    .advantages__text {}
+    .advantages__text {
+    margin: 20px 0 0 0;
+}
 
 
     /*========== gallery block ==========*/
 
-    .gallery {}
+    .gallery {
+    padding: 40px 0;
+}
 
     .gallery-content {}
 
@@ -897,7 +926,10 @@ footer {
 
     /*========== contacts ==========*/
 
-    .contacts {}
+    .contacts {
+    background: var(--gray);
+    padding: 40px;
+}
 
     .contacts-content {}
 
