@@ -35,14 +35,7 @@ function ready() {
     }
 
     links.forEach(function(link) {
-        link.addEventListener('click', function(e) {
-            event.preventDefault();
-
-            var hash = link.getAttribute('href');
-            var blockToScroll = document.querySelector(hash);
-
-            blockToScroll.scrollIntoView({ behavior: 'smooth' });
-        });
+        link.addEventListener('click', scrollToBlock);
     });
 
     if (sendMessageForm) {
@@ -62,14 +55,27 @@ function ready() {
     functions
     ==========*/
 
+    function scrollToBlock(e) {
+        e.preventDefault();
+
+        var link = e.currentTarget;
+        var hash = link.getAttribute('href');
+        var blockToScroll = document.querySelector(hash);
+
+        blockToScroll.scrollIntoView({ behavior: 'smooth' });
+
+        if (windowWidth <= tabletWidth) {
+            toggleMobileMenu();
+        }
+    }
+
     function initGallerySlider() {
         var swiper = new Swiper('.swiper-container', {
             navigation: {
                 nextEl: '.slider-button-next',
                 prevEl: '.slider-button-prev',
             },
-            slidesPerView: 3,
-            spaceBetween: 20,
+            slidesPerView: 'auto',
             loop: true
         });
     }
@@ -97,23 +103,31 @@ function ready() {
         e.preventDefault();
         var successMessage = document.querySelector('.js_from-success');
 
-        $.ajax({
-            type: form.attr('method'),
-            url: form.attr('action'),
-            data: form.serialize(),
-            success: function() {
-                form[0].reset();
+        form[0].reset();
                 form[0].classList.add('hidden');
                 successMessage.classList.remove('hidden');
                 setTimeout(function() {
                     form[0].classList.remove('hidden');
                     successMessage.classList.add('hidden');
                 }, 2000);
-            },
-            error: function() {
-                console.log('error sendMessage');
-            }
-        });
+
+        // $.ajax({
+        //     type: form.attr('method'),
+        //     url: form.attr('action'),
+        //     data: form.serialize(),
+        //     success: function() {
+        //         form[0].reset();
+        //         form[0].classList.add('hidden');
+        //         successMessage.classList.remove('hidden');
+        //         setTimeout(function() {
+        //             form[0].classList.remove('hidden');
+        //             successMessage.classList.add('hidden');
+        //         }, 2000);
+        //     },
+        //     error: function() {
+        //         console.log('error sendMessage');
+        //     }
+        // });
     }
 
     function toggleMobileMenu() {
